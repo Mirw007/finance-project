@@ -1,0 +1,458 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qf.j1906.mapper.ProductMapper" >
+  <resultMap id="BaseResultMap" type="com.qf.j1906.po.Product" >
+    <id column="pdc_id" property="pdcId" jdbcType="BIGINT" />
+    <result column="pdc_name" property="pdcName" jdbcType="VARCHAR" />
+    <result column="pdc_risk" property="pdcRisk" jdbcType="VARCHAR" />
+    <result column="pdc_deadline" property="pdcDeadline" jdbcType="VARCHAR" />
+    <result column="pdc_code" property="pdcCode" jdbcType="BIGINT" />
+    <result column="pdc_type" property="pdcType" jdbcType="VARCHAR" />
+    <result column="pdc_value" property="pdcValue" jdbcType="DOUBLE" />
+    <result column="pdc_level" property="pdcLevel" jdbcType="INTEGER" />
+    <result column="pdc_price" property="pdcPrice" jdbcType="DOUBLE" />
+    <result column="pdc_rate" property="pdcRate" jdbcType="DOUBLE" />
+    <result column="pdc_date" property="pdcDate"/>
+    <result column="pdc_gain" property="pdcGain" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    pdc_id, pdc_name, pdc_risk, pdc_deadline, pdc_code, pdc_type, pdc_value, pdc_level, 
+    pdc_price
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.qf.j1906.po.ProductExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from product
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from product
+    where pdc_id = #{pdcId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from product
+    where pdc_id = #{pdcId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.qf.j1906.po.ProductExample" >
+    delete from product
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qf.j1906.po.Product" >
+    insert into product (pdc_id, pdc_name, pdc_risk, 
+      pdc_deadline, pdc_code, pdc_type, 
+      pdc_value, pdc_level, pdc_price
+      )
+    values (#{pdcId,jdbcType=BIGINT}, #{pdcName,jdbcType=VARCHAR}, #{pdcRisk,jdbcType=VARCHAR}, 
+      #{pdcDeadline,jdbcType=VARCHAR}, #{pdcCode,jdbcType=BIGINT}, #{pdcType,jdbcType=VARCHAR}, 
+      #{pdcValue,jdbcType=DOUBLE}, #{pdcLevel,jdbcType=INTEGER}, #{pdcPrice,jdbcType=DOUBLE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.qf.j1906.po.Product" >
+    insert into product
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pdcId != null" >
+        pdc_id,
+      </if>
+      <if test="pdcName != null" >
+        pdc_name,
+      </if>
+      <if test="pdcRisk != null" >
+        pdc_risk,
+      </if>
+      <if test="pdcDeadline != null" >
+        pdc_deadline,
+      </if>
+      <if test="pdcCode != null" >
+        pdc_code,
+      </if>
+      <if test="pdcType != null" >
+        pdc_type,
+      </if>
+      <if test="pdcValue != null" >
+        pdc_value,
+      </if>
+      <if test="pdcLevel != null" >
+        pdc_level,
+      </if>
+      <if test="pdcPrice != null" >
+        pdc_price,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pdcId != null" >
+        #{pdcId,jdbcType=BIGINT},
+      </if>
+      <if test="pdcName != null" >
+        #{pdcName,jdbcType=VARCHAR},
+      </if>
+      <if test="pdcRisk != null" >
+        #{pdcRisk,jdbcType=VARCHAR},
+      </if>
+      <if test="pdcDeadline != null" >
+        #{pdcDeadline,jdbcType=VARCHAR},
+      </if>
+      <if test="pdcCode != null" >
+        #{pdcCode,jdbcType=BIGINT},
+      </if>
+      <if test="pdcType != null" >
+        #{pdcType,jdbcType=VARCHAR},
+      </if>
+      <if test="pdcValue != null" >
+        #{pdcValue,jdbcType=DOUBLE},
+      </if>
+      <if test="pdcLevel != null" >
+        #{pdcLevel,jdbcType=INTEGER},
+      </if>
+      <if test="pdcPrice != null" >
+        #{pdcPrice,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qf.j1906.po.ProductExample" resultType="java.lang.Integer" >
+    select count(*) from product
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update product
+    <set >
+      <if test="record.pdcId != null" >
+        pdc_id = #{record.pdcId,jdbcType=BIGINT},
+      </if>
+      <if test="record.pdcName != null" >
+        pdc_name = #{record.pdcName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pdcRisk != null" >
+        pdc_risk = #{record.pdcRisk,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pdcDeadline != null" >
+        pdc_deadline = #{record.pdcDeadline,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pdcCode != null" >
+        pdc_code = #{record.pdcCode,jdbcType=BIGINT},
+      </if>
+      <if test="record.pdcType != null" >
+        pdc_type = #{record.pdcType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pdcValue != null" >
+        pdc_value = #{record.pdcValue,jdbcType=DOUBLE},
+      </if>
+      <if test="record.pdcLevel != null" >
+        pdc_level = #{record.pdcLevel,jdbcType=INTEGER},
+      </if>
+      <if test="record.pdcPrice != null" >
+        pdc_price = #{record.pdcPrice,jdbcType=DOUBLE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update product
+    set pdc_id = #{record.pdcId,jdbcType=BIGINT},
+      pdc_name = #{record.pdcName,jdbcType=VARCHAR},
+      pdc_risk = #{record.pdcRisk,jdbcType=VARCHAR},
+      pdc_deadline = #{record.pdcDeadline,jdbcType=VARCHAR},
+      pdc_code = #{record.pdcCode,jdbcType=BIGINT},
+      pdc_type = #{record.pdcType,jdbcType=VARCHAR},
+      pdc_value = #{record.pdcValue,jdbcType=DOUBLE},
+      pdc_level = #{record.pdcLevel,jdbcType=INTEGER},
+      pdc_price = #{record.pdcPrice,jdbcType=DOUBLE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qf.j1906.po.Product" >
+    update product
+    <set >
+      <if test="pdcName != null" >
+        pdc_name = #{pdcName,jdbcType=VARCHAR},
+      </if>
+      <if test="pdcRisk != null" >
+        pdc_risk = #{pdcRisk,jdbcType=VARCHAR},
+      </if>
+      <if test="pdcDeadline != null" >
+        pdc_deadline = #{pdcDeadline,jdbcType=VARCHAR},
+      </if>
+      <if test="pdcCode != null" >
+        pdc_code = #{pdcCode,jdbcType=BIGINT},
+      </if>
+      <if test="pdcType != null" >
+        pdc_type = #{pdcType,jdbcType=VARCHAR},
+      </if>
+      <if test="pdcValue != null" >
+        pdc_value = #{pdcValue,jdbcType=DOUBLE},
+      </if>
+      <if test="pdcLevel != null" >
+        pdc_level = #{pdcLevel,jdbcType=INTEGER},
+      </if>
+      <if test="pdcPrice != null" >
+        pdc_price = #{pdcPrice,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where pdc_id = #{pdcId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qf.j1906.po.Product" >
+    update product
+    set pdc_name = #{pdcName,jdbcType=VARCHAR},
+      pdc_risk = #{pdcRisk,jdbcType=VARCHAR},
+      pdc_deadline = #{pdcDeadline,jdbcType=VARCHAR},
+      pdc_code = #{pdcCode,jdbcType=BIGINT},
+      pdc_type = #{pdcType,jdbcType=VARCHAR},
+      pdc_value = #{pdcValue,jdbcType=DOUBLE},
+      pdc_level = #{pdcLevel,jdbcType=INTEGER},
+      pdc_price = #{pdcPrice,jdbcType=DOUBLE}
+    where pdc_id = #{pdcId,jdbcType=BIGINT}
+  </update>
+  <select id="selectProductsById" resultMap="BaseResultMap">
+    select
+    *
+    from product p
+    join interest_rate ir on p.pdc_id=ir.pdt_id where p.pdc_id=#{pdcId}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    *
+    from product p
+    join interest_rate ir on p.pdc_id=ir.pdt_id
+  </select>
+  <!--最高-->
+  <select id="selectProductTypeAndDeadLineAndRate" resultMap="BaseResultMap">
+    SELECT
+        *
+    FROM
+        (
+            SELECT DISTINCT
+                *
+            FROM
+                interest_rate
+            JOIN product ON interest_rate.pdt_id = product.pdc_id
+            ORDER BY
+                pdc_rate DESC
+        ) interest_rate
+    GROUP BY
+        interest_rate.pdt_id
+    ORDER BY
+        pdc_rate DESC
+    LIMIT 4
+</select>
+  <!--最低-->
+
+  <select id="selectProductTypeAndDeadLineAndRateX" resultMap="BaseResultMap">
+           SELECT
+        *
+    FROM
+        (
+            SELECT DISTINCT
+                *
+            FROM
+                interest_rate
+            JOIN product ON interest_rate.pdt_id = product.pdc_id
+            ORDER BY
+                pdc_rate
+        ) interest_rate
+    GROUP BY
+        interest_rate.pdt_id
+    ORDER BY
+        pdc_rate desc
+    LIMIT 4
+   </select>
+  <!--    查所有包括rate-->
+  <select id="selectProductsAndRate" resultMap="BaseResultMap">
+ SELECT
+        *
+    FROM
+        (
+            SELECT DISTINCT
+                *
+            FROM
+                interest_rate
+            JOIN product ON interest_rate.pdt_id = product.pdc_id
+        )
+				interest_rate
+    GROUP BY
+        interest_rate.pdt_id
+    </select>
+  <select id="selectProductByType" resultMap="BaseResultMap">
+     select
+        p.pdc_name,
+        p.pdc_deadline,
+        p.pdc_risk,
+        p.pdc_type,
+        tmp.minRate,
+        tmp.maxRate
+    from
+        product p
+        inner join (
+    select
+        t.pdc_id,
+        max(t1.pdc_rate) maxRate,
+        min(t1.pdc_rate) minRate
+    from
+        product t
+        inner join interest_rate t1 on t.pdc_id = t1.pdt_id
+    where
+        pdc_deadline = '买卖灵活'
+        and t1.pdc_date > (date_sub(now( ),interval 1 week))
+    group by
+        t.pdc_id
+        ) tmp on p.pdc_id = tmp.pdc_id
+  </select>
+  <select id="selectProductByDeadLine" resultMap="BaseResultMap">
+    select
+        p.pdc_name,
+        p.pdc_deadline,
+        p.pdc_risk,
+        p.pdc_type,
+        tmp.maxRate
+    from
+        product p
+        inner join (
+    select
+        t.pdc_id,
+        max(t1.pdc_rate) maxRate,
+        min(t1.pdc_rate) minRate
+    from
+        product t
+        inner join interest_rate t1 on t.pdc_id = t1.pdt_id
+    where
+        pdc_deadline in ('1个月','2个月','3个月')
+    group by
+        t.pdc_id
+        ) tmp on p.pdc_id = tmp.pdc_id
+  </select>
+  <select id="selectProductByDeadline" resultMap="BaseResultMap">
+   select
+        p.pdc_name,
+        p.pdc_deadline,
+        p.pdc_risk,
+        p.pdc_type,
+        tmp.maxRate
+    from
+        product p
+        inner join (
+    select
+        t.pdc_id,
+        max(t1.pdc_rate) maxRate,
+        min(t1.pdc_rate) minRate
+    from
+        product t
+        inner join interest_rate t1 on t.pdc_id = t1.pdt_id
+    where
+        pdc_deadline not in ('1个月','2个月','3个月','买卖灵活')
+    group by
+        t.pdc_id
+        ) tmp on p.pdc_id = tmp.pdc_id
+  </select>
+  <select id="selectProducts" resultMap="BaseResultMap">
+     select
+        p.pdc_name,
+        p.pdc_deadline,
+        p.pdc_risk,
+        p.pdc_type,
+        tmp.maxRate
+    from
+        product p
+        inner join (
+    select
+        t.pdc_id,
+        max(t1.pdc_rate) maxRate,
+        min(t1.pdc_rate) minRate
+    from
+        product t
+        inner join interest_rate t1 on t.pdc_id = t1.pdt_id
+    where
+       t1.pdc_date > (date_sub(now( ),interval 1 week))
+    group by
+        t.pdc_id
+        ) tmp on p.pdc_id = tmp.pdc_id
+  </select>
+    <!--模糊搜索create by dafei-->
+    <select id="productFuzzySearchBykeyword" resultMap="BaseResultMap" >
+        SELECT
+            *
+        FROM
+            product p
+        JOIN interest_rate ir ON p.pdc_id = ir.pdt_id
+        WHERE
+            CONCAT(
+                pdc_name,
+                pdc_type,
+                pdc_risk,
+                pdc_code
+            ) LIKE '%' #{keyword} '%'
+        AND ir.pdc_date LIKE '2019-12-03' '%'
+    </select>
+</mapper>

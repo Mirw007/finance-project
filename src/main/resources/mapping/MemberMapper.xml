@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.j1906.mapper.UserMapper">
+    <resultMap id="userMap" type="com.qf.j1906.po.User">
+        <id column="u_id" property="uId"></id>
+        <result column="u_tel" property="uTel"></result>
+        <result column="u_password" property="uPassword"></result>
+        <result column="u_name" property="uName"></result>
+        <result column="u_email" property="uEmail"></result>
+        <result column="u_address" property="uAddress"></result>
+        <result column="u_card" property="uCard"></result>
+        <result column="u_bank" property="uBank"></result>
+    </resultMap>
+
+    <sql id="memberColumns">${alias}.u_id,${alias}.u_tel,${alias}.u_password,${alias}.u_name,${alias}.u_email,${alias}.u_address,${alias}.u_card,${alias}.u_bank</sql>
+    <!--用户注册-->
+    <insert id="register">
+         insert into user(u_name,u_tel,u_password) values (#{uName},#{uTel},#{uPassword})
+    </insert>
+    <!--用户信息完善-->
+    <!--<insert id="registers">
+         insert into user(u_email,u_address,u_card,u_bank) values (#{uEmail},#{uAddress},#{uCard},#{uBank})
+    </insert>-->
+    <!--用户登录-->
+    <select id="login" resultMap="userMap">
+        select
+        <include refid="memberColumns"><property name="alias" value="u"></property></include>
+        from user u
+        <where>
+           <!-- <if test="uTel!=null and uTel!=''">
+                u_tel = #{uTel}
+            </if>-->
+            <if test="uName!=null and uName!=''">
+                and u_name=#{uName}
+            </if>
+            <!--<if test="uEmail!=null and uEmail!=''">
+                and u_email = #{uEmail}
+            </if>-->
+        </where>
+    </select>
+    <!--查询所有用户-->
+    <!--<select id="findMembers" resultMap="userMap">
+        select
+        <include refid="memberColumns"><property name="alias" value="u"></property></include>
+        from
+        user u
+    </select>-->
+    <!--查询用户ByName-->
+    <select id="findMemberByName" resultMap="userMap">
+        select
+        u_Name,u_Password,u_tel
+        from
+        user
+        where
+        u_name=#{uName}
+    </select>
+    <!--修改用户信息-->
+    <update id="editMember">
+         update user u
+            set
+          u_name=#{uName},u_password=#{uPassword},u_tel=#{uTel},u_email=#{uEmail},u_address=#{uAddress},u_card=#{uCard},u_bank=#{uBank}
+            where
+         u_tel=#{uTel}
+    </update>
+    <!--用户账号注销-->
+    <delete id="delMember">
+        delete from user
+        <where>
+            <if test="uName!=null and uName!=''">
+                u_name=#{uName}
+            </if>
+        </where>
+    </delete>
+    <select id="getUserByName" resultMap="userMap">
+        select * from user where u_name=#{uName}
+    </select>
+</mapper>
